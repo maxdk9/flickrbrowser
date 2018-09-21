@@ -4,12 +4,17 @@ package mazzy.and.udnugat1.flickbrowser;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements GetFlickJsonData.
 
     private Button buttonTest;
 
+
+    FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
 
 
     @Override
@@ -34,11 +41,21 @@ public class MainActivity extends AppCompatActivity implements GetFlickJsonData.
         /*GetRawData getRawData = new GetRawData(this);
         getRawData.doInBackground(FlickrUrl1);*/
 
-        Log.d(TAG, "OnCreateMethodEnd");
+
         //buttonTest=(Button) findViewById(R.id.buttontest);
         //buttonTest.setOnClickListener(this.buttonTestClickListener);
 
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter( new ArrayList<Photo>(),this);
+        RecyclerView recyclerView = this.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.setAdapter(flickrRecyclerViewAdapter);
+
+        Log.d(TAG, "OnCreateMethodEnd");
     }
 
 
@@ -89,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements GetFlickJsonData.
     public void onDataAvailable(List<Photo> list, DownloadStatus status) {
         if (status == DownloadStatus.OK) {
             Log.d(TAG, "OnDownloadComplete. downloadData is"+list);
+            flickrRecyclerViewAdapter.loadNewData(list);
         }
         else{
             Log.e(TAG, "OnDownloadComplete. Error, Download status is " + status);
