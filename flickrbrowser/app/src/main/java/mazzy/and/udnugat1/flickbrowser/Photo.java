@@ -1,7 +1,9 @@
 package mazzy.and.udnugat1.flickbrowser;
 
-public class Photo {
+import java.io.Serializable;
 
+public class Photo implements Serializable{
+    private static final long serialVersionID=1L;
     private String mTitle;
     private String mAuthor;
     private String mAuthorId;

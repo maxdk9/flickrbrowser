@@ -1,6 +1,7 @@
 package mazzy.and.udnugat1.flickbrowser;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -12,13 +13,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements GetFlickJsonData.OnDataAvailable {
+public class MainActivity extends BaseActivity implements GetFlickJsonData.OnDataAvailable,RecyclerItemClickListener.onRecyclerClickListener {
     private static final String TAG = "MainActivity";
 
     private final String FlickrUrl1="https://api.flickr.com/services/feeds/photos_public.gne?tags=nougat,android,sdk&tagmode=any&format=json";
@@ -36,18 +38,9 @@ public class MainActivity extends AppCompatActivity implements GetFlickJsonData.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        /*GetRawData getRawData = new GetRawData(this);
-        getRawData.doInBackground(FlickrUrl1);*/
 
 
-        //buttonTest=(Button) findViewById(R.id.buttontest);
-        //buttonTest.setOnClickListener(this.buttonTestClickListener);
-
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ActivateToolbar(false);
 
         flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter( new ArrayList<Photo>(),this);
         RecyclerView recyclerView = this.findViewById(R.id.recycler_view);
@@ -56,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements GetFlickJsonData.
         recyclerView.setAdapter(flickrRecyclerViewAdapter);
 
         Log.d(TAG, "OnCreateMethodEnd");
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,recyclerView,this));
     }
 
 
@@ -111,5 +106,23 @@ public class MainActivity extends AppCompatActivity implements GetFlickJsonData.
         else{
             Log.e(TAG, "OnDownloadComplete. Error, Download status is " + status);
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int Position) {
+        Log.d(TAG, "onItemClick: starts");
+        Toast.makeText(MainActivity.this, "Normal tap in position " + Position, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onLongClick(View view, int Position) {
+        Log.d(TAG, "onLongClick: starts");
+
+
+        Intent intent = new Intent(this, PhotoDetailActivity.class);
+        intent.putExtra(FILE_TRANSFER,flickrRecyclerViewAdapter.getPhoto(Position));
+        startActivity(intent);
+
+
     }
 }
