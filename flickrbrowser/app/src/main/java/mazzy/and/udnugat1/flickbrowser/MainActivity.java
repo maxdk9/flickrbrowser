@@ -37,19 +37,12 @@ public class MainActivity extends BaseActivity implements GetFlickJsonData.OnDat
         Log.d(TAG, "OnCreateMethodStarted");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
         ActivateToolbar(false);
-
         flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter( new ArrayList<Photo>(),this);
         RecyclerView recyclerView = this.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         recyclerView.setAdapter(flickrRecyclerViewAdapter);
-
         Log.d(TAG, "OnCreateMethodEnd");
-
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,recyclerView,this));
     }
 
