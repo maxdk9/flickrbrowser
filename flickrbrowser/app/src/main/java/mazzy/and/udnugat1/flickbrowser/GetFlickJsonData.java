@@ -77,7 +77,7 @@ public class GetFlickJsonData extends AsyncTask<String,Void,List<Photo>> impleme
 
                     String link = mediaUrl.replaceFirst("_m", "_b");
 
-                    Photo photoObject = new Photo(title, author, author_id, link, tags, "");
+                    Photo photoObject = new Photo(title, author, author_id, link, tags, mediaUrl);
                     mPhotoList.add(photoObject);
 
                     Log.d(TAG, "OnDownloadComplete " + photoObject.toString());
