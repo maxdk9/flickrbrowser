@@ -1,6 +1,7 @@
 package mazzy.and.udnugat1.flickbrowser;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,10 +26,14 @@ public class PhotoDetailActivity extends BaseActivity {
 
         if (photo != null) {
             TextView titleview = findViewById(R.id.photo_title);
-            titleview.setText(photo.getTitle());
+            Resources resources=getResources();
+            String tektitle = resources.getString(R.string.photo_title_text, photo.getTitle());
+            titleview.setText(tektitle);
+
+
 
             TextView tagsview = findViewById(R.id.photo_tags);
-            tagsview.setText(photo.getTags());
+            tagsview.setText(resources.getString(R.string.photo_tags_text,photo.getTags()));
 
             TextView authorview = findViewById(R.id.photo_author);
             authorview.setText(photo.getAuthor());

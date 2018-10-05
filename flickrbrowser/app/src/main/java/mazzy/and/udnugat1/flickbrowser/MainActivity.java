@@ -72,7 +72,7 @@ public class MainActivity extends BaseActivity implements GetFlickJsonData.OnDat
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu_main,menu);
         Log.d(TAG, "OnCreateOptionsMenu "+true);
         return super.onCreateOptionsMenu(menu);
     }
@@ -81,6 +81,16 @@ public class MainActivity extends BaseActivity implements GetFlickJsonData.OnDat
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(TAG, "OnOptionsItemSelected returned" + true);
+        if (item.getItemId() == R.id.action_search) {
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
+            return  true;
+        }
+
+        if (item.getItemId() == R.id.action_settings) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
